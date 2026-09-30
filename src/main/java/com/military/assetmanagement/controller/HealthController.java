@@ -20,7 +20,7 @@ public class HealthController {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @GetMapping("/health")
+    @GetMapping({"/health", "/api/health"})
     public ResponseEntity<Map<String, Object>> health() {
         Map<String, Object> health = new HashMap<>();
         health.put("status", "UP");
@@ -30,10 +30,9 @@ public class HealthController {
 
         try {
             Integer result = jdbcTemplate.queryForObject("SELECT 1", Integer.class);
-            health.put("database", "CONNECTED");
-            health.put("dbPing", result != null && result == 1 ? "OK" : "WARN");
+            health.put("database", result != null && result == 1 ? "CONNECTED" : "DEGRADED");
         } catch (Exception e) {
-            health.put("database", "DISCONNECTED: " + e.getMessage());
+            health.put("database", "DISCONNECTED");
             return ResponseEntity.status(503).body(health);
         }
 
