@@ -1,19 +1,16 @@
-# Build stage
-FROM eclipse-temurin:17-jdk AS builder
+# Build stage with pre-installed Maven & Java 17
+FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /build
 
-# Copy maven wrapper and pom.xml
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
-RUN chmod +x ./mvnw
+# Cache dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B || true
 
-# Copy source code
-COPY src/ ./src/
+# Copy source code and build production jar
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Package jar
-RUN ./mvnw clean package -DskipTests
-
-# Runtime stage
+# Lightweight runtime stage
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=builder /build/target/military-asset-management-backend-0.0.1-SNAPSHOT.jar app.jar
