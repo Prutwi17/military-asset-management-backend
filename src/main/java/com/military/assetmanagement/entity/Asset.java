@@ -58,7 +58,7 @@ public class Asset {
     @Column(name = "last_maintenance_date")
     private LocalDate lastMaintenanceDate;
 
-    @Column(name = "image_url", length = 500)
+    @Column(name = "image_url", columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @Column(name = "is_active", nullable = false)

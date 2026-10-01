@@ -74,7 +74,7 @@ public class TransferController {
     }
 
     @PutMapping("/{id}/approve")
-    @PreAuthorize("hasAnyRole('ADMIN', 'BASE_COMMANDER', 'LOGISTICS_OFFICER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BASE_COMMANDER')")
     public ResponseEntity<ApiResponse<TransferDto>> approveTransfer(@PathVariable Long id) {
         User user = getCurrentUser();
         TransferDto approved = transferService.approveTransfer(id, user);

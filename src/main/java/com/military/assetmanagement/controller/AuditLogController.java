@@ -35,7 +35,7 @@ public class AuditLogController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'BASE_COMMANDER', 'LOGISTICS_OFFICER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<List<AuditLogDto>>> getAuditLogs(
             @RequestParam(required = false) String entityName,
             @RequestParam(required = false) String action,

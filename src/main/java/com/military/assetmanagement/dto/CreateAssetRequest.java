@@ -40,6 +40,7 @@ public class CreateAssetRequest {
     private LocalDate purchaseDate;
     private BigDecimal purchasePrice;
     private LocalDate lastMaintenanceDate;
+    @NotBlank(message = "Asset image is required")
     private String imageUrl;
 
     public CreateAssetRequest() {

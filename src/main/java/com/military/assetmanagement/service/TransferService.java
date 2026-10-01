@@ -156,6 +156,10 @@ public class TransferService {
             throw new IllegalStateException("Only PENDING transfers can be approved. Current status: " + transfer.getStatus());
         }
 
+        if (currentUser.getRole() == Role.LOGISTICS_OFFICER) {
+            throw new AccessDeniedException("Access Denied: Logistics Officers cannot approve transfers.");
+        }
+
         // RBAC validation: Admin, Destination Base Commander, or Source Base Commander
         if (currentUser.getRole() == Role.BASE_COMMANDER) {
             Long cmdBaseId = currentUser.getBase() != null ? currentUser.getBase().getId() : -1L;
@@ -189,6 +193,10 @@ public class TransferService {
 
         if (transfer.getStatus() != TransferStatus.PENDING) {
             throw new IllegalStateException("Only PENDING transfers can be rejected. Current status: " + transfer.getStatus());
+        }
+
+        if (currentUser.getRole() == Role.LOGISTICS_OFFICER) {
+            throw new AccessDeniedException("Access Denied: Logistics Officers cannot reject transfers.");
         }
 
         if (currentUser.getRole() == Role.BASE_COMMANDER) {

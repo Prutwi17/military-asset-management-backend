@@ -66,10 +66,8 @@ public class AuditService {
         String effectiveUsername = null;
         Role effectiveRole = null;
 
-        if (currentUser.getRole() == Role.BASE_COMMANDER) {
-            // Base commander sees logs pertaining to their operations or keyword matching their base
-            // In addition, commanders can see operations performed by their username
-            // If no specific filter, allow viewing logs with keyword or user filter
+        if (currentUser.getRole() != Role.ADMIN) {
+            throw new org.springframework.security.access.AccessDeniedException("Access Denied: Only ADMIN can access audit trail logs.");
         }
 
         List<AuditLog> logs = auditLogRepository.filterAuditLogs(

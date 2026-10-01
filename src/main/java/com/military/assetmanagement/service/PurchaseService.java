@@ -103,6 +103,11 @@ public class PurchaseService {
             linkedAsset = assetRepository.findById(request.getAssetId())
                     .orElseThrow(() -> new ResourceNotFoundException("Asset not found with id: " + request.getAssetId()));
 
+            if (!linkedAsset.getBase().getId().equals(base.getId())) {
+                throw new IllegalArgumentException("The specified asset belongs to base '" +
+                        linkedAsset.getBase().getName() + "', but the purchase is for base '" + base.getName() + "'.");
+            }
+
             // Increase existing asset quantity
             linkedAsset.setQuantity(linkedAsset.getQuantity() + request.getQuantity());
             linkedAsset.setPurchasePrice(request.getUnitPrice());

@@ -145,7 +145,7 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.of(2024, 6, 15),
                     new BigDecimal("2400000.00"),
                     LocalDate.of(2026, 9, 10),
-                    "https://images.unsplash.com/photo-1544476915-ed1370594142?auto=format&fit=crop&w=600&q=80"
+                    "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=800&q=80"
             ));
 
             Asset rifle = assetRepository.save(new Asset(
@@ -163,7 +163,7 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.of(2024, 1, 20),
                     new BigDecimal("1200.00"),
                     LocalDate.of(2026, 8, 15),
-                    null
+                    "https://images.unsplash.com/photo-1595590424283-b8f17842773f?auto=format&fit=crop&w=800&q=80"
             ));
 
             Asset radio = assetRepository.save(new Asset(
@@ -181,7 +181,7 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.of(2024, 3, 10),
                     new BigDecimal("3000.00"),
                     LocalDate.of(2026, 9, 28),
-                    null
+                    "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?auto=format&fit=crop&w=800&q=80"
             ));
 
             Asset laptop = assetRepository.save(new Asset(
@@ -199,7 +199,7 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.of(2024, 4, 5),
                     new BigDecimal("2500.00"),
                     LocalDate.of(2026, 9, 1),
-                    null
+                    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80"
             ));
 
             Asset nvg = assetRepository.save(new Asset(
@@ -217,7 +217,7 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.of(2024, 5, 18),
                     new BigDecimal("4200.00"),
                     LocalDate.of(2026, 8, 20),
-                    null
+                    "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80"
             ));
 
             // 4. Initialize Purchases matching assets

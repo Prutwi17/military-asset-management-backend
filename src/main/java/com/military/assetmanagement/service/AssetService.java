@@ -65,6 +65,10 @@ public class AssetService {
 
         validateBaseAccess(base, currentUser, "register asset under this base");
 
+        if (request.getImageUrl() == null || request.getImageUrl().trim().isEmpty()) {
+            throw new IllegalArgumentException("Asset image is required.");
+        }
+
         // Generate assetCode if not provided
         String code = request.getAssetCode();
         if (code == null || code.trim().isEmpty()) {
@@ -203,6 +207,10 @@ public class AssetService {
     public void deleteAsset(Long id, User currentUser) {
         Asset asset = assetRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Asset not found with id: " + id));
+
+        if (currentUser.getRole() == Role.LOGISTICS_OFFICER) {
+            throw new AccessDeniedException("Access Denied: Logistics Officers cannot delete or decommission defense assets.");
+        }
 
         validateBaseAccess(asset.getBase(), currentUser, "delete this asset");
 

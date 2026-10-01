@@ -25,13 +25,16 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final AuditService auditService;
 
     public AuthService(AuthenticationManager authenticationManager,
                        UserRepository userRepository,
-                       JwtService jwtService) {
+                       JwtService jwtService,
+                       AuditService auditService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.auditService = auditService;
     }
 
     @Transactional(readOnly = true)
@@ -55,6 +58,14 @@ public class AuthService {
         // The authoritative role comes directly from the user record in database.
         logger.info("User '{}' authenticated successfully with authoritative role '{}'", 
                 user.getUsername(), user.getRole());
+
+        auditService.recordAudit(
+                user,
+                "USER_LOGIN",
+                "User",
+                user.getId(),
+                "User authenticated successfully with authoritative role: " + user.getRole()
+        );
 
         String jwtToken = jwtService.generateToken(user);
         long expiresInMs = jwtService.getExpirationMs();
